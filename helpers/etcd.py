@@ -15,6 +15,13 @@ class Etcd:
             self.authentication = None
         self.ttl = config["ttl"]
         self.timeout = config["timeout"]
+        self.override_with_envs()
+
+    def override_with_envs(self):
+        env_endpoint_url = os.getenv("ETCD_ENDPOINT_URL")
+        if env_endpoint_url:
+            self.endpoint = env_endpoint_url
+
 
     def get_client_path(self, path, max_attempts=1):
         attempts = 0
